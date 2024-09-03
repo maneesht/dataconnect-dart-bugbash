@@ -7,5 +7,7 @@ npm install && npm run download:sdk & # Install node dependencies
 wait # wait for parallel tasks to finish
 firebase init dataconnect
 cd dart_movie_app
+read -p "Enter Firebase Project ID: " projectId
+flutterfire configure --project $projectId -a com.example.dart_movie_app # Set up flutterfire with your firebase project
 flutter pub get
 cd ..
