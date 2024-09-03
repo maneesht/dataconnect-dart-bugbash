@@ -54,3 +54,10 @@
 #     }
 #   }
 # }
+query ListMovies @auth(level: PUBLIC) {
+    movies {
+        title,
+        genre,
+        rating
+    }
+}

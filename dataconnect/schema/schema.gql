@@ -26,3 +26,8 @@
 # 	muted: Boolean!
 # 	snoozed: Date
 # }
+type Movie @table {
+    title: String!
+    genre: String!
+    rating: Float!
+}
