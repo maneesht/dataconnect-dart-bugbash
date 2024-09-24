@@ -1,6 +1,6 @@
 {
   "projects": {
-    "default": null
+    "default": "movie-app-dart"
   },
   "targets": {},
   "etags": {},

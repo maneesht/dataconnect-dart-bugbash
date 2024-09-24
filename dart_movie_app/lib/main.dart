@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 // TODO: Remove the following line when your SDK has been generated
-//import './generated/movies.dart';
+import './generated/movies.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
@@ -69,7 +69,7 @@ class FakeMovie {
 class _MyHomePageState extends State<MyHomePage> {
   final List<FakeMovie> _movies = [FakeMovie("The Mat-Rix")];
   // TODO: Replace the line above with
-  // ListMoviesMovies _movies = [];
+  // List<ListMoviesMovies> _movies = [];
   @override
   void initState() {
     super.initState();
@@ -77,7 +77,7 @@ class _MyHomePageState extends State<MyHomePage> {
     /// TODO: Uncomment the following lines to update the movies state when data
     /// comes back from the server.
     // MoviesConnector.instance.dataConnect
-    //     .useDataConnectEmulator('localhost', port: 9399);
+    //     .useDataConnectEmulator('localhost', 9399);
     // MoviesConnector.instance.listMovies.ref().subscribe().listen((res) {
     //   _movies = res.data.movies;
     // });
