@@ -26,3 +26,6 @@ doc/api/
 .flutter-plugins
 .flutter-plugins-dependencies
 node_modules/
+dart_movie_app/firebase_data_connect/
+dart_movie_app/lib/generated
+dataconnect/.dataconnect

@@ -1,10 +1,11 @@
 #!/bin/bash
 trap "exit" INT
 echo "Downloading and installing VSCode for Dart"
-curl "https://firebasestorage.googleapis.com/v0/b/getting-started-dart-storage.appspot.com/o/firebase-vscode-0.5.7-dart3.vsix?alt=media&token=7019cd11-d7d0-4039-b72d-426d7cb00d02" > ~/.cache/firebase-vscode-dart.vsix && code --install-extension ~/.cache/firebase-vscode-dart.vsix  
+curl "https://firebasestorage.googleapis.com/v0/b/getting-started-dart-storage.appspot.com/o/firebase-vscode-0.9.1-dart.vsix?alt=media&token=73876059-e47a-4a84-9464-949ec4961ca8" > ~/.cache/firebase-vscode-0.9.1-dart.vsix && code --install-extension ~/.cache/firebase-vscode-0.9.1-dart.vsix --force 
 dart pub global activate flutterfire_cli & # install flutterfire CLI
-npm install && npm run download:sdk & # Install node dependencies
+cd setup && npm install && npm run download:sdk & # Install node dependencies
 wait # wait for parallel tasks to finish
+cd ../
 firebase init dataconnect
 cd dart_movie_app
 read -p "Enter Firebase Project ID: " projectId

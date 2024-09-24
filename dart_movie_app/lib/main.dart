@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 // TODO: Remove the following line when your SDK has been generated
 //import './generated/movies.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
-void main() {
+void main() async {
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
@@ -72,7 +77,7 @@ class _MyHomePageState extends State<MyHomePage> {
     /// TODO: Uncomment the following lines to update the movies state when data
     /// comes back from the server.
     // MoviesConnector.instance.dataConnect
-    //    .useDataConnectEmulator('localhost', port: 9002);
+    //     .useDataConnectEmulator('localhost', port: 9399);
     // MoviesConnector.instance.listMovies.ref().subscribe().listen((res) {
     //   _movies = res.data.movies;
     // });
