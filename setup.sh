@@ -5,10 +5,9 @@ curl "https://firebasestorage.googleapis.com/v0/b/getting-started-dart-storage.a
 dart pub global activate flutterfire_cli & # install flutterfire CLI
 cd setup && npm install && npm run download:sdk & # Install node dependencies
 wait # wait for parallel tasks to finish
-cd ../
-firebase init dataconnect
 cd dart_movie_app
 read -p "Enter Firebase Project ID: " projectId
+firebase use $projectId
 flutterfire configure --project $projectId -a com.example.dart_movie_app # Set up flutterfire with your firebase project
 flutter pub get
 cd ..

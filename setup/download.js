@@ -17,7 +17,7 @@ const cachePath = path.resolve(absolutePath);
 fs.mkdirSync(cachePath, { recursive: true });
 const fullZipPath = cachePath + zipName;
 
-const fullOutputPath = path.resolve('./dart_movie_app');
+const fullOutputPath = path.resolve('../dart_movie_app');
 function getLatestStorageZip() {
     const url = `https://firebasestorage.googleapis.com/v0/b/getting-started-dart-storage.appspot.com/o/${zipName}?alt=media`;
     return new Promise((resolve, reject) => {
