@@ -82,8 +82,6 @@ class _MyHomePageState extends State<MyHomePage> {
     // setState({
     //   _movies = res.data.movies;
     // });
-    //   _movies = res.data.movies;
-    // });
   }
 
   void _refreshData() {
