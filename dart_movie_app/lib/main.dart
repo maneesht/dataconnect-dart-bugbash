@@ -79,6 +79,9 @@ class _MyHomePageState extends State<MyHomePage> {
     // MoviesConnector.instance.dataConnect
     //     .useDataConnectEmulator('localhost', 9399);
     // MoviesConnector.instance.listMovies.ref().subscribe().listen((res) {
+    // setState({
+    //   _movies = res.data.movies;
+    // });
     //   _movies = res.data.movies;
     // });
   }
