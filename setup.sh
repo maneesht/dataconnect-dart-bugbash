@@ -74,7 +74,12 @@ if ! [ -x "$(command -v flutter)" ]; then
     echo "-- Untarring flutter"
     tar -xf $FLUTTER_FILE_PATH -C ~/development/
   fi
+else
+    echo "-- Flutter installation found. Skipping installation."
+fi
 
+if ! [ -x "$(command -v flutterfire)" ]; then
+  echo "-- Installing flutterfire"
   export PATH="~/development/flutter/bin:~/.pub-cache/bin:$PATH"
 
   dart pub global activate flutterfire_cli
@@ -86,11 +91,9 @@ if ! [ -x "$(command -v flutter)" ]; then
   echo "For more information about modifying PATHs, see https://unix.stackexchange.com/a/26059"
   echo ""
 else
-  echo "-- 'flutter' command found. Skipping installation"
+  echo "-- 'flutterfire' command found. Skipping installation"
 fi
 
-curl "https://firebasestorage.googleapis.com/v0/b/getting-started-dart-storage.appspot.com/o/firebase-vscode-0.9.1-dart.vsix?alt=media&token=73876059-e47a-4a84-9464-949ec4961ca8" > ~/.cache/firebase-vscode-0.9.1-dart.vsix && code --install-extension ~/.cache/firebase-vscode-0.9.1-dart.vsix --force 
-dart pub global activate flutterfire_cli & # install flutterfire CLI
 cd setup && npm install && npm run download:sdk & # Install node dependencies
 wait # wait for parallel tasks to finish
 cd dart_movie_app
