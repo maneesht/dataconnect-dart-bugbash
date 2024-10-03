@@ -79,12 +79,10 @@ class _MyHomePageState extends State<MyHomePage> {
     /// TODO: Uncomment the following lines to update the movies state when data
     /// comes back from the server.
     // MoviesConnector.instance.dataConnect
-    //     .useDataConnectEmulator('localhost', 9400);
-    // MoviesConnector.instance.getMovieActors.ref().build().execute().then((res) {
-    //   res.data.movies.forEach((res) {
-    //     res.movieActors_on_movie.forEach((data) {
-    //       print(data.actor.name);
-    //     });
+    //     .useDataConnectEmulator('localhost', 9399);
+    // MoviesConnector.instance.listMovies.ref().build().execute().then((res) {
+    //   setState(() {
+    //     _movies = res.data.movies;
     //   });
     // });
   }
@@ -137,9 +135,10 @@ class _MyHomePageState extends State<MyHomePage> {
               tooltip: 'Refresh',
               child: const Icon(Icons.refresh),
             ), // This trailing comma makes auto-formatting nicer for build methods.
-            const Center(
-              child: Text(
-                  "If you're seeing this, open lib/main.dart and implement the TODOs"),
+            Center(
+              child: Text(_movies.length > 1
+                  ? "If you're seeing this, open lib/main.dart and implement the TODOs"
+                  : "Congratulations! You have implemented all of the TODOs!"),
             ),
             Expanded(
               child: ListView.builder(
