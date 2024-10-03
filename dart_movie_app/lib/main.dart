@@ -1,3 +1,4 @@
+import 'package:dart_movie_app/generated/movies.dart';
 import 'package:flutter/material.dart';
 // TODO: Remove the following line when your SDK has been generated
 // import './generated/movies.dart';
@@ -80,11 +81,17 @@ class _MyHomePageState extends State<MyHomePage> {
     /// comes back from the server.
     // MoviesConnector.instance.dataConnect
     //     .useDataConnectEmulator('localhost', 9399);
-    // MoviesConnector.instance.listMovies.ref().build().execute().then((res) {
-    //   setState(() {
-    //     _movies = res.data.movies;
-    //   });
-    // });
+    MoviesConnector.instance.listMovies.ref().build().execute().then((res) {
+      setState(() {
+        _movies = res.data.movies;
+      });
+    });
+    MoviesConnector.instance.listMoviesByGenre
+        .ref()
+        .genre("sci-fi")
+        .build()
+        .execute()
+        .then(() {});
   }
 
   void _refreshData() {
@@ -137,8 +144,8 @@ class _MyHomePageState extends State<MyHomePage> {
             ), // This trailing comma makes auto-formatting nicer for build methods.
             Center(
               child: Text(_movies.length > 1
-                  ? "If you're seeing this, open lib/main.dart and implement the TODOs"
-                  : "Congratulations! You have implemented all of the TODOs!"),
+                  ? "Congratulations! You have implemented all of the TODOs!"
+                  : "If you're seeing this, open lib/main.dart and implement the TODOs"),
             ),
             Expanded(
               child: ListView.builder(
