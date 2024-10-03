@@ -38,6 +38,7 @@ then
     echo "Your architecture is not supported: $uname_m."
     sorry
 fi
+path_str="export PATH=\$PATH"
 if ! [ -x "$(command -v flutter)" ]; then
   echo '-- Flutter not found.' >&2
   echo "-- Installing Flutter"
@@ -56,10 +57,11 @@ if ! [ -x "$(command -v flutter)" ]; then
   fi
 
 
-  mkdir ~/development
-  export FLUTTER_FILE_PATH="$HOME/Downloads/$FLUTTER_FILE_NAME"
+  mkdir -p ~/development
+  mkdir -p ~/.cache
+  export FLUTTER_FILE_PATH="$HOME/.cache/$FLUTTER_FILE_NAME"
 
-  if [ -f "$HOME/Downloads/$FLUTTER_FILE_NAME" ]; then
+  if [ -f $FLUTTER_FILE_PATH ]; then
     echo "-- skipping download of flutter zip"
   else
     echo "-- Downloading flutter"
@@ -74,28 +76,26 @@ if ! [ -x "$(command -v flutter)" ]; then
     echo "-- Untarring flutter"
     tar -xf $FLUTTER_FILE_PATH -C ~/development/
   fi
+  path_str+=":$HOME/development/flutter/bin"
+
 else
     echo "-- Flutter installation found. Skipping installation."
 fi
 
 if ! [ -x "$(command -v flutterfire)" ]; then
   echo "-- Installing flutterfire"
-  export PATH="~/development/flutter/bin:~/.pub-cache/bin:$PATH"
-
-  dart pub global activate flutterfire_cli
-
+  export PATH="$HOME/development/flutter/bin:$HOME/.pub-cache/bin:$PATH"
   echo "Please add the following line to either your ~/.profile or ~/.bash_profile, then restart your terminal."
   echo ""
-  echo "PATH=\$PATH:$HOME/development/flutter/bin"
+  echo "$path_str:$HOME/.pub-cache/bin"
   echo ""
   echo "For more information about modifying PATHs, see https://unix.stackexchange.com/a/26059"
   echo ""
+  dart pub global activate flutterfire_cli
 else
   echo "-- 'flutterfire' command found. Skipping installation"
 fi
 
-cd setup && npm install && npm run download:sdk & # Install node dependencies
-wait # wait for parallel tasks to finish
 cd dart_movie_app
 read -p "Enter Firebase Project ID: " projectId
 firebase use $projectId
