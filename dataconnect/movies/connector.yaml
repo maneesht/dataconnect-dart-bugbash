@@ -3,6 +3,3 @@ generate:
   dartSdk:
     outputDir: "../../dart_movie_app/lib/generated"
     package: "connectors_default"
-  javascriptSdk:
-    outputDir: "./js/generated"
-    package: "connectors_default"
