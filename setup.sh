@@ -63,7 +63,7 @@ if ! [ -x "$(command -v flutter)" ]; then
     echo "-- skipping download of flutter zip"
   else
     echo "-- Downloading flutter"
-    curl -f -o "" -L --progress-bar $FLUTTER_DOWNLOAD_PATH || sorry
+    curl -f -o "$FLUTTER_FILE_PATH" -L --progress-bar $FLUTTER_DOWNLOAD_PATH || sorry
   fi
 
   if [ "$MACHINE" = macos ]; then
