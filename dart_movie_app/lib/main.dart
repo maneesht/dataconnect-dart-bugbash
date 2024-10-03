@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 // TODO: Remove the following line when your SDK has been generated
-// import './generated/movies.dart';
+import './generated/movies.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
@@ -45,6 +45,7 @@ class MyApp extends StatelessWidget {
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
+  // The problem is that you're passing in List<String> as T, but the serializer expects List<String> to be passed in. Not String.
 
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
@@ -67,28 +68,42 @@ class FakeMovie {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final List<FakeMovie> _movies = [FakeMovie("The Mat-Rix")];
+  // final List<FakeMovie> _movies = [FakeMovie("The Mat-Rix")];
   // TODO: Replace the line above with
-  // List<ListMoviesMovies> _movies = [];
+  List<ListMoviesMovies> _movies = [];
   @override
   void initState() {
     super.initState();
 
     /// TODO: Uncomment the following lines to update the movies state when data
     /// comes back from the server.
-    // MoviesConnector.instance.dataConnect
-    //     .useDataConnectEmulator('localhost', 9399);
-    // MoviesConnector.instance.listMovies.ref().subscribe().listen((res) {
-    // setState(() {
-    //   _movies = res.data.movies;
-    // });
-    // });
+    MoviesConnector.instance.dataConnect
+        .useDataConnectEmulator('localhost', 9400);
+    MoviesConnector.instance.getMovieActors.ref().build().execute().then((res) {
+      res.data.movies.forEach((res) {
+        res.movieActors_on_movie.forEach((data) {
+          print(data.actor.name);
+        });
+      });
+    });
+    MoviesConnector.instance.listMovies
+        .ref()
+        .orderByRating(OrderDirection.DESC)
+        .limit(10)
+        .build()
+        .subscribe()
+        .listen((res) {
+      print(res.data.movies);
+      setState(() {
+        _movies = res.data.movies;
+      });
+    });
   }
 
   void _refreshData() {
     // Gets the data, then notifies the subscriber(s) of the new data.
     // TODO: Uncomment the following line to execute the query
-    // MoviesConnector.instance.listMovies.ref().execute();
+    MoviesConnector.instance.listMovies.ref().build().execute();
   }
 
   @override
@@ -140,14 +155,27 @@ class _MyHomePageState extends State<MyHomePage> {
             Expanded(
               child: ListView.builder(
                 itemBuilder: (BuildContext context, int index) {
-                  return Container(
-                      child: Card(
-                          child: Padding(
-                              padding: EdgeInsets.all(50.0),
-                              child: Text(
-                                _movies[index].title,
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ))));
+                  return GestureDetector(
+                      onTap: () {
+                        MoviesConnector.instance.deleteMovie
+                            .ref(id: _movies[index].id)
+                            .build()
+                            .execute()
+                            .then((res) {
+                          print(
+                              "Deleted: ${res.data.movie_delete!.id}, with title: ${_movies[index].title}");
+                          _refreshData();
+                        });
+                      },
+                      child: Container(
+                          child: Card(
+                              child: Padding(
+                                  padding: EdgeInsets.all(50.0),
+                                  child: Text(
+                                    "${_movies[index].title}, rating: ${_movies[index].rating}",
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold),
+                                  )))));
                 },
                 itemCount: _movies.length,
               ),
